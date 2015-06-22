@@ -116,16 +116,9 @@ function initialize() {
 
 	  var theInstagramObj = ["BaiadoSancho","GraceBay","RabbitBeach","PlayaParaiso","PlayadeSesIlletes",
 	  "AnseLazio","WhiteBeach","FlamencoBeach","WhitehavenBeach","ElafonissiBeach"];
-	  
+	  getInstagramData(theInstagramObj[i]);
 
-	  window.onclick = myFunction;
 
-		// If the user clicks in the window, set the background color of <body> to yellow
-		function myFunction() {
-		    // document.getElementsByTagName("BODY")[0].style.backgroundColor = "yellow";
-		    liquidFill();
-		    getInstagramData(theInstagramObj[i]);
-		}
 	  // Zoom to 9 when clicking on marker
 	  // google.maps.event.addListener(marker[i],'click',function() {
 	  // map.setZoom(9);
@@ -235,4 +228,11 @@ function liquidFill() {
     // config5.maxValue = 150
     // config5.displayPercent = false;
     // loadLiquidFillGauge("fillgauge6", 120, config5);
+}
+window.onclick = myFunction;
+
+// If the user clicks in the window, set the background color of <body> to yellow
+function myFunction() {
+    // document.getElementsByTagName("BODY")[0].style.backgroundColor = "yellow";
+    liquidFill();
 }
