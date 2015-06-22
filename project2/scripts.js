@@ -57,7 +57,7 @@ function getInstagramData(theInstagramObj){
 
 
 
-			$('#theInstagramResults').html('<p id="loadingMsg">The first 10 images from Instagram with the playlist tag.</p>');
+			$('#theInstagramResults').html('<p id="loadingMsg">The first 10 images from Instagram with the tag of the BEACH.</p>');
 			for(i=0; i<10; i++){
 				var theImage = theData.data[i].images.low_resolution.url;
 				var instagramLike = theData.data[i].likes.count;
