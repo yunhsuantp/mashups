@@ -1,0 +1,29 @@
+h1{
+	text-align: center;
+}
+
+#loadingMsg{
+	text-align: center;
+	margin: 10px;
+}
+
+body{
+	background-color: #A9D0F5;
+	font-family: 'Helvetica';
+	margin: 10;
+	padding: 10;
+	vertical-align: center;
+	text-align: center;;
+
+}
+
+
+#googleMap{
+	/*position:center;*/
+	/*vertical-align: center;*/
+	text-align: center;
+	width:1000px;
+	height:600px;
+}
+
+.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
