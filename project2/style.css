@@ -13,17 +13,23 @@ body{
 	margin: 10;
 	padding: 10;
 	vertical-align: center;
-	text-align: center;;
+	text-align: center;
 
 }
-
+#container{
+	text-align: center;
+}
 
 #googleMap{
 	/*position:center;*/
 	/*vertical-align: center;*/
-	text-align: center;
+	/*text-align: center;*/
 	width:1000px;
 	height:600px;
+	z-index: -1;
+	margin: 0 auto;
 }
-
+#fillgauge3{
+	position: absolute;
+}
 .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
