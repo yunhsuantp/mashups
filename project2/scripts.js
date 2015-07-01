@@ -12,18 +12,126 @@ var beach10=new google.maps.LatLng(35.831658, 23.443487);
 var beachArray = [beach1, beach2, beach3, beach4, beach5, beach6, beach7, beach8, beach9, beach10];
 var infoWindowContent =["No.1 Baia do Sancho","No.2 Grace Bay","No.3 Rabbit Beach","No.4 Playa Paraiso","No.5 Playa de Ses Illetes",
 "No.6 Anse Lazio","No.7 White Beach","No.8 Flamenco Beach","No.9 Whitehaven Beach","No.10 Elafonissi Beach"];
+// var saveImage,saveInstaLike;
 var map;
+// var theHTMLInstagramStringArray1 = [];
+// var theHTMLInstagramStringArray2 = [];
+
+// function preload() {
+//   img = loadImage(theHTMLInstagramString);
+// }
+
+// var oneBeachImageURL = [];
+var imageURL= [];
+// var beachCounter = 0;
+
+function setup(){
+	// initialize();
+	// getInstagramData(theInstagramObj);
+  var theCanvas = createCanvas(windowWidth/2, 3000);
+  theCanvas.parent('container-canvas');
+  
+}
+
+// var p5ImageURL = [];
+var weHaveAnImage = false;
+var readyToDrawImage = false;
+var curImg=[];
+var xPos=0, yPos=100;
+var imgCounter=0;
+var imgsDone = 0;
+
+
+function draw(){
+
+  if (weHaveAnImage){
+  	//create the image
+  	for(var i=0; i<imageURL.length; i++){
+  		for(var j=0; j<imageURL[i].length; j++){
+			loadImage(imageURL[i][j], function(img){
+				imgCounter++;
+				curImg.push(img);	
+				if (imgCounter === 100){
+					console.log("READY!!!!");
+					console.log(curImg.length);
+					weHaveAnImage = false;
+				  	readyToDrawImage = true;
+				}
+			});	
+
+		  	// weHaveAnImage = false;
+		  	// readyToDrawImage = true;
+  		}
+  		
+  	}
+  	// console.log("counter=");
+  	// console.log(imgCounter);
+	// curImg = createImg(p5ImageURL[i]);
+
+  }
+
+  if (readyToDrawImage){
+  	//draw the image
+  	for(var k=0; k<curImg.length; k++){
+  		image(curImg[k], xPos, yPos, 60,60);
+	   	xPos+=60;
+	   	if(k>0 && (k%10 == 9)){
+	   		yPos+=80;
+	   		xPos=0;
+	   		// console.log("print i:");
+	   		// console.log(i);
+	   	}  	
+  	}	
+  }
+ 
+}
+
+
+
+// var img;
+// var canvas;
+
+// function setup() {
+//   canvas = createCanvas(400, 400);
+  // img = createImg("http://th07.deviantart.net/fs70/PRE/i/2011/260/3/5/dash_hooray_by_rainbowcrab-d49xk0d.png");
+
+//   img.position(190, 50);
+//   img.size(200, AUTO);
+
+//   canvas.position(300, 50);
+//   // Attach listeners for mouse events related to canvas
+//   canvas.mouseOver(uniHide);
+//   canvas.mouseOut(uniShow);
+// }
+
+// function draw() {
+//   // All drawing happens in the canvas.
+//   noStroke();
+//   background(220, 180, 200);
+//   fill(180, 200, 40);
+//   strokeWeight(6);
+//   stroke(180, 100, 240);
+//   for (var i=0; i<width; i+=15) {
+//     line(i, 0, i, height);
+//   }
+// }
+
+
+
+
 
 
 function getInstagramData(theInstagramObj){
-	console.log("Going to get a photo!");
-	console.log(theInstagramObj);
+	//console.log("Going to get a photo!");
+	//console.log(theInstagramObj);
 
 	var apiKEY = 'f6fa6aecfd764bab98f01d90354cdf5e';
 	var tagName = theInstagramObj;
 	var instagramURL = 'https://api.instagram.com/v1/tags/' + tagName + '/media/recent?client_id=';
 	var searchInstagramURL = instagramURL + apiKEY;
-	console.log(searchInstagramURL);
+	
+
+	//console.log(searchInstagramURL);
 	$.ajax({
 		url: searchInstagramURL,
 		type: 'GET',
@@ -31,13 +139,13 @@ function getInstagramData(theInstagramObj){
 		error: function(err){
 			console.log("Tears");
 			console.log(err);
-			$('#theInstagramResults').html('Sorry we can not find images through the TAG in Instagram.');
+			// $('#theInstagramResults').html('Sorry we can not find images through the TAG in Instagram.');
 		},
 		success: function(theData){
 			console.log("Yes");
-			console.log(theData);
+			//console.log(theData);
 			
-			console.log(theData.data[0].images.low_resolution.url);
+			//console.log(theData.data[0].images.low_resolution.url);
 
 // 
 
@@ -54,23 +162,52 @@ function getInstagramData(theInstagramObj){
 // 		    </div>
 // 
 
+			var curArray = [];
 
-
-
-			$('#theInstagramResults').html('<p id="loadingMsg">The first 10 images from Instagram with the tag of the BEACH.</p>');
+		//	$('#theInstagramResults').append('<p id="loadingMsg">The first 10 images from Instagram with the tag of the BEACH.</p>');
+			// console.log("show!");
+		//	$('#theInstagramResults').append('<h2>');
 			for(i=0; i<10; i++){
 				var theImage = theData.data[i].images.low_resolution.url;
-				var instagramLike = theData.data[i].likes.count;
-				console.log("Likes");
-				console.log(instagramLike);
-				// var theHTMLInstagramString ='<li class="category"><h2>' + '<img src="'+ theImage + '">';
-				// theHTMLInstagramString +=  instagramLike + 'Likes</h2></li>';
-				var theHTMLInstagramString ='<h2>' + '<img src="'+ theImage + '">';
-				theHTMLInstagramString +=  instagramLike + 'Likes</h2>';
-				$('#theInstagramResults').append(theHTMLInstagramString);
+				curArray.push(theImage);
+				
+
+				// //Put images in curArray
+
+				// // oneBeachImageURL.push(theImage);
+			//	var instagramLike = theData.data[i].likes.count;
+				// //console.log("Likes");
+				// //console.log(instagramLike);
+
+			//	var theHTMLInstagramString ='<img src="'+ theImage + '">';
+			//	theHTMLInstagramString +=  instagramLike + 'Likes</h2>';
+				
+				//console.log("getInstagramData1");
+				//console.log(theHTMLInstagramStringArray1[i]);
+			//	$('#theInstagramResults').append(theHTMLInstagramString);
 			}
+
+			// console.log("We have all 10 images!");
+			// console.log(curArray);
 			
+
 			
+			// var count = 0;
+			// p5ImageURL = imageURLArray[count];
+			
+			// count++;
+			
+
+			//Put curArray into the imageURL array
+			imageURL.push(curArray);
+			//Wait until all 10 calls are done
+			if (imageURL.length == 10){
+				weHaveAnImage = true;
+				// console.log("DRAW");
+			}
+
+			
+
 		}
 	});
 
@@ -78,9 +215,37 @@ function getInstagramData(theInstagramObj){
 
 
 
+function makeMarkerEvent(aMarker, iWindow){
+	google.maps.event.addListener(aMarker, 'click', function() {
+		iWindow.open(map,aMarker);
+
+		//Show some photos
+		// console.log("Show photos for the marker!");
+		// console.log(aMarker);
+		// console.log(iWindow);
+		var curContent = iWindow.content;
+
+		/*
+		for (var i = 0; i < infoWindowContent.length; i++){
+			if (curContent == infoWindowContent[i]){
+				console.log(infoWindowContent[i]);
+			}
+		}
+		*/
+
+		//Function to display photos based on the marker clicked
+		// showPhotos();
+
+  	}); 
+}
+
+// function showPhotos(){
+// 	triggerDraw = true;
+// }
 
 // Set Map Properties
 function initialize() {
+	console.log("start for the map");
   var mapProp = {
     center:beach5,
     zoom:2,
@@ -100,24 +265,30 @@ function initialize() {
 	for(var i=0;i<10;i++){
 		//console.log(beachArray[i]);
 		//Marker
-	  var marker=[];
-	  marker[i]=new google.maps.Marker({
-	  position:beachArray[i],
-	  });
-
-	  marker[i].setMap(map);
 
 	  //InfoWindow
 	  var infowindow = [];
+	  var infoWindowHTML = infoWindowContent[i];
 	  infowindow[i]= new google.maps.InfoWindow({
-	  content: infoWindowContent[i]
+		content: infoWindowHTML
 	  });
-	  infowindow[i].open(map,marker[i]);
+	  var curInfoWindow = infowindow[i];
+
+	  var marker;
+	  marker=new google.maps.Marker({
+	  	position:beachArray[i],
+	  });
+
+	  marker.setMap(map);
+	  makeMarkerEvent(marker,curInfoWindow);
 
 	  var theInstagramObj = ["BaiadoSancho","GraceBay","RabbitBeach","PlayaParaiso","PlayadeSesIlletes",
-	  "AnseLazio","WhiteBeach","FlamencoBeach","WhitehavenBeach","ElafonissiBeach"];
-	  getInstagramData(theInstagramObj[i]);
-
+		"AnseLazio","WhiteBeach","FlamencoBeach","WhitehavenBeach","ElafonissiBeach"];
+		getInstagramData(theInstagramObj[i]);
+		
+		// theHTMLInstagramStringArray2[i]=theHTMLInstagramStringArray1;
+		//console.log("getInstagramData2");
+		//console.log(theHTMLInstagramStringArray2[i]);
 
 	  // Zoom to 9 when clicking on marker
 	  // google.maps.event.addListener(marker[i],'click',function() {
@@ -130,6 +301,14 @@ function initialize() {
 	  //   map.panTo(marker[i].getPosition());
 	  // },3000);
 	}
+	// weHaveAnImage = true;
+	// for(var i=0;i<10;i++){
+	// 	var theInstagramObj = ["BaiadoSancho","GraceBay","RabbitBeach","PlayaParaiso","PlayadeSesIlletes",
+	// 	"AnseLazio","WhiteBeach","FlamencoBeach","WhitehavenBeach","ElafonissiBeach"];
+	// 	getInstagramData(theInstagramObj[i]);
+	// 	console.log("getInstagramData");
+	// }
+	
   
   	
   
@@ -163,7 +342,7 @@ function initialize() {
 
 // Add an Event Listener to Load the Map
 google.maps.event.addDomListener(window, 'load', initialize);
-
+/*
 function liquidFill() {
 // loadLiquidFillGauge("fillgauge1", 55);
 // var config1 = liquidFillGaugeDefaultSettings();
@@ -236,3 +415,5 @@ function myFunction() {
     // document.getElementsByTagName("BODY")[0].style.backgroundColor = "yellow";
     liquidFill();
 }
+*/
+
